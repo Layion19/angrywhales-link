@@ -1,103 +1,79 @@
 import Image from "next/image";
+import { Playfair_Display } from "next/font/google";
 
-export default function Home() {
+const playfair = Playfair_Display({ subsets: ["latin"], weight: "400" });
+
+type LinkItem = {
+  label: string;
+  href: string;
+  icon: string;
+  alt: string;
+};
+
+const links: LinkItem[] = [
+  { label: "Website", href: "https://angrywhales.io", icon: "/aw-logo-round.jpg", alt: "Angry Whales" },
+  { label: "Discord", href: "https://discord.gg/TxE38V4BpY", icon: "/discord.jpg", alt: "Discord" },
+  { label: "X (Official)", href: "https://x.com/angrywhales__", icon: "/x-logo.jpg", alt: "X" },
+  { label: "Layion (Founder)", href: "https://x.com/Gems_Finder22", icon: "/founder.jpg", alt: "Layion" },
+];
+
+export default function LinksPage() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <main className="min-h-screen flex items-center justify-center bg-[radial-gradient(ellipse_at_center,theme(colors.sky.100),theme(colors.sky.300)_45%,theme(colors.sky.500)_100%)] text-gray-900">
+      <div className="w-full max-w-md mx-auto px-6 py-10 flex flex-col items-center">
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        {/* Bloc logo + légende superposée */}
+        <div className="relative w-[260px]">
+          <Image
+            src="/aw-logo-yellow.png"
+            alt="Angry Whales"
+            width={400}
+            height={200}
+            className="h-auto w-auto object-contain select-none pointer-events-none"
+            priority
+          />
+
+          {/* Légende superposée, collée sous le motmark */}
+          <p
+            className={`${playfair.className} absolute left-1/2 -translate-x-1/2 bottom-[-10px] text-black text-sm text-center leading-tight tracking-wide`}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            Angry Whales by Layion.<br />
+            launching soon on Abstract.
+          </p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        {/* Espace sous le bloc pour ne pas que la légende chevauche les boutons */}
+        <div className="mt-8 w-full space-y-4">
+          {links.map((l) => (
+            <a
+              key={l.label}
+              href={l.href}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center justify-between rounded-2xl bg-white/90 backdrop-blur border border-white/60 px-4 py-3 shadow hover:bg-yellow-100 transition"
+            >
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-300 bg-white flex items-center justify-center">
+                  <Image
+                    src={l.icon}
+                    alt={l.alt}
+                    width={40}
+                    height={40}
+                    className="h-10 w-10 object-contain"
+                  />
+                </div>
+                <span className="font-semibold">{l.label}</span>
+              </div>
+
+              {/* Icône "ouvrir dans un nouvel onglet" */}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 text-gray-500">
+                <path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z" />
+                <path d="M5 5h6v2H7v10h10v-4h2v6H5z" />
+              </svg>
+            </a>
+          ))}
+        </div>
+      </div>
+    </main>
   );
 }
